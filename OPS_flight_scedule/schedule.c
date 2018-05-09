@@ -1,8 +1,9 @@
 /*
  * schedule.c
  *
- *  Created on: May 8, 2018
- *      Author: andre
+ *  
+ *      Author: Brendan B.
+ *      Edit by Andrew R. (may 8, 2018)
  */
 /*
 
