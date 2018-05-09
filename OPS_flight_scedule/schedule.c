@@ -82,6 +82,7 @@ int main( int argc, char** argv )
 char edit[1];
 int  index_for_edit;
 
+	//ask the operator to go back and overwrite a command they had previously created...
 while(1){
 	printf("Would you like to go back and edit any of the scheduled commands?\n(Y/N): ");
 	scanf("%s", edit);
@@ -123,6 +124,8 @@ while(1){
 }
 
 /* Changed what was previously in the main to the following function to be called in a loop...*/
+
+// Parameters: the index for the sceduled event user wants to overwrite....
 void append_schedule(int index){
 	int i = index;
 
