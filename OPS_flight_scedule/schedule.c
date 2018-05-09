@@ -2,8 +2,8 @@
  * schedule.c
  *
  *  
- *      Author: Brendan B.
- *      Edit by Andrew R. (may 8, 2018)
+ *      Author: andrew
+ *     
  */
 /*
 
@@ -79,7 +79,7 @@ int main( int argc, char** argv )
 		printf("\n");
 	}
 // Edit will include the option to change a sceduled command by choosing an index.
-
+// Edit by Andrew R. (may 8, 2018)
 char edit[1];
 int  index_for_edit;
 
