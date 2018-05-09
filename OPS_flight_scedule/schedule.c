@@ -122,7 +122,7 @@ while(1){
 	return 0;
 }
 
-
+/* Changed what was previously in the main to the following function to be called in a loop...*/
 void append_schedule(int index){
 	int i = index;
 
@@ -142,7 +142,7 @@ void append_schedule(int index){
 	int copied = snprintf(output, SCRIPT_MAX_LENGTH, "COMMAND(%s);", bin.slot[i].command);
 	if( copied >= SCRIPT_MAX_LENGTH ) {
 		printf("Command string too large, exiting scheduler..\n");
-		return -1;
+		return;
 	}
 	memcpy(bin.slot[i].command, output, strlen(output));
 	printf("Scheduling command\n\t%s @time %" PRIu32 "\n",
