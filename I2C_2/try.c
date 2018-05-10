@@ -72,5 +72,21 @@ void write()//probably get some buffer data - checked and then an address
 
 void read()
 {
-	int status = I2C0->
+	int status = I2C0->IF;// tells us what the bus is tying to do annd we can create the rest of the funciton accordingly
+
+	if (status & I2C_IF_START){//start flag has been set, SENDING an address and read flag
+		I2C0->TXDATA = addr+R;
+	}
+	else if (status & I2C_IF_ACK){
+		I2C0->RXDATA = datacomingin;
+		}
+	else if (status & I2C_IF_NACK){
+		I2C0->CMD = I2C_CMD_CONT;
+		I2C0->RXDATA = datacomingin;
+	}
+	else if (status & I2C_IF_RXDATA){
+		I2C0->RXDATA = moredatacomingin;
+
+	}
 }
+
