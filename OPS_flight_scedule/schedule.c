@@ -1,8 +1,9 @@
 /*
  * schedule.c
  *
- *  Created on: May 8, 2018
- *      Author: andre
+ *  
+ *      Author: andrew
+ *     
  */
 /*
 
@@ -78,10 +79,11 @@ int main( int argc, char** argv )
 		printf("\n");
 	}
 // Edit will include the option to change a sceduled command by choosing an index.
-
+// Edit by Andrew R. (may 8, 2018)
 char edit[1];
 int  index_for_edit;
 
+	//ask the operator to go back and overwrite a command they had previously created...
 while(1){
 	printf("Would you like to go back and edit any of the scheduled commands?\n(Y/N): ");
 	scanf("%s", edit);
@@ -122,7 +124,9 @@ while(1){
 	return 0;
 }
 
+/* Changed what was previously in the main to the following function to be called in a loop...*/
 
+// Parameters: the index for the sceduled event user wants to overwrite....
 void append_schedule(int index){
 	int i = index;
 
@@ -142,7 +146,7 @@ void append_schedule(int index){
 	int copied = snprintf(output, SCRIPT_MAX_LENGTH, "COMMAND(%s);", bin.slot[i].command);
 	if( copied >= SCRIPT_MAX_LENGTH ) {
 		printf("Command string too large, exiting scheduler..\n");
-		return -1;
+		return;
 	}
 	memcpy(bin.slot[i].command, output, strlen(output));
 	printf("Scheduling command\n\t%s @time %" PRIu32 "\n",
