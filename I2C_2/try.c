@@ -84,7 +84,7 @@ void read()
 		I2C0->CMD = I2C_CMD_CONT;
 		I2C0->RXDATA = datacomingin;
 	}
-	else if (status & I2C_IF_RXDATA){
+	else if (status & I2C_IF_RXDATAV){
 		I2C0->RXDATA = moredatacomingin;
 
 	}
