@@ -34,6 +34,42 @@ Note that the maximum number of commands per file is 250. The length of an orbit
 #define SCRIPT_MAX_LENGTH (4*20+3)
 #define MAX_COMMANDS_PER_SCHEDULE (4*60+3)
 
+
+/* Changed what was previously in the main to the following function to be called in a loop...*/
+
+// Parameters: the index for the sceduled event user wants to overwrite....
+void append_schedule(int index){
+	int i = index;
+
+	printf("This is slot %d of %d command slots\n", i, MAX_COMMANDS_PER_SCHEDULE);
+
+	/* Read in unix execution time.
+	*/
+	printf("Enter unix time of command execution:\n");
+	printf("Enter a value : ");
+	scanf("%" SCNu32, &bin.slot[i].unix_time);
+	bin.slot[i].unix_time = htole32(bin.slot[i].unix_time);
+
+	/* Read in command to execute
+	*/
+	printf("Enter the command to execute using the format: \"command\", \"arg\"\n");
+	scanf(" %99[^\n\r]", bin.slot[i].command);
+	int copied = snprintf(output, SCRIPT_MAX_LENGTH, "COMMAND(%s);", bin.slot[i].command);
+	if( copied >= SCRIPT_MAX_LENGTH ) {
+		printf("Command string too large, exiting scheduler..\n");
+		return;
+	}
+	memcpy(bin.slot[i].command, output, strlen(output));
+	printf("Scheduling command\n\t%s @time %" PRIu32 "\n",
+	       bin.slot[i].command, bin.slot[i].unix_time);
+	bin.slot[i].command_length = strlen(bin.slot[i].command);
+
+	/* Update total commands in schedule.
+	*/
+	bin.total_commands = htole32((i+1));
+}
+
+
 struct command_t
 {
 	uint32_t unix_time;
@@ -122,40 +158,6 @@ while(1){
 	fclose(fid);
 	printf("Done!\n");
 	return 0;
-}
-
-/* Changed what was previously in the main to the following function to be called in a loop...*/
-
-// Parameters: the index for the sceduled event user wants to overwrite....
-void append_schedule(int index){
-	int i = index;
-
-	printf("This is slot %d of %d command slots\n", i, MAX_COMMANDS_PER_SCHEDULE);
-
-	/* Read in unix execution time.
-	*/
-	printf("Enter unix time of command execution:\n");
-	printf("Enter a value : ");
-	scanf("%" SCNu32, &bin.slot[i].unix_time);
-	bin.slot[i].unix_time = htole32(bin.slot[i].unix_time);
-
-	/* Read in command to execute
-	*/
-	printf("Enter the command to execute using the format: \"command\", \"arg\"\n");
-	scanf(" %99[^\n\r]", bin.slot[i].command);
-	int copied = snprintf(output, SCRIPT_MAX_LENGTH, "COMMAND(%s);", bin.slot[i].command);
-	if( copied >= SCRIPT_MAX_LENGTH ) {
-		printf("Command string too large, exiting scheduler..\n");
-		return;
-	}
-	memcpy(bin.slot[i].command, output, strlen(output));
-	printf("Scheduling command\n\t%s @time %" PRIu32 "\n",
-	       bin.slot[i].command, bin.slot[i].unix_time);
-	bin.slot[i].command_length = strlen(bin.slot[i].command);
-
-	/* Update total commands in schedule.
-	*/
-	bin.total_commands = htole32((i+1));
 }
 
 
