@@ -1,0 +1,13 @@
+#Ignore pycache in all subdirectories
+**/__pycache__/
+
+#Ignore any object files
+**.pyo
+**.pyc
+**.o
+
+#Ignore OSX folders
+**/__MACOSX/
+
+#Ignore .idea folders
+**/.idea/
